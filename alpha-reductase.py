@@ -2,7 +2,6 @@ import requests
 from io import BytesIO
 import streamlit as st
 import pandas as pd
-import numpy as np
 import pickle
 from rdkit import Chem
 from rdkit.Chem import AllChem
@@ -76,15 +75,23 @@ if st.button("Predict"):
 
             # Prediction
             prediction = model.predict(fingerprint_df)[0]
-            st.write(f"Predicted pIC50: {prediction:.2f}")
 
-            # Display matching PubChem fingerprints
-            matching_fingerprints = {f"PubchemFP{i}": bit for i, bit in enumerate(fingerprint) if bit == 1}
-            if matching_fingerprints:
-                st.write("Matching PubChem Fingerprints (1s):")
-                st.json(matching_fingerprints)
+            # Classify pIC50 score
+            if prediction > 7:
+                category = "Active"
+                color = "green"
+            elif 5 <= prediction <= 7:
+                category = "Intermediate"
+                color = "orange"
             else:
-                st.write("No matching PubChem fingerprints (1s) for this molecule.")
+                category = "Inactive"
+                color = "red"
+
+            # Display pIC50 and category with color
+            st.markdown(
+                f"<h3 style='color:{color};'>Predicted pIC50: {prediction:.2f} ({category})</h3>",
+                unsafe_allow_html=True,
+            )
         else:
             st.error("Invalid SMILES string. Please enter a valid SMILES.")
     else:
