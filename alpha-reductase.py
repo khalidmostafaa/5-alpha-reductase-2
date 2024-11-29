@@ -65,7 +65,9 @@ st.markdown(
 # SMILES input
 smiles_input = st.text_input("Enter the canonical SMILES:", placeholder="Example: CC[C@H](C)[C@H](N)C(=O)N1CCCC1")
 
-if st.button("Predict pIC50"):
+
+
+          if st.button("Predict pIC50"):
     if smiles_input:
         # Preprocess the SMILES string and predict
         try:
