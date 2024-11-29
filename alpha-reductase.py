@@ -6,10 +6,13 @@ import pickle
 from rdkit import Chem
 from rdkit.Chem import AllChem
 
-# Load the trained model
-model_path = 'E:\\Projects\\CADD\\5-alpha reductase-2\\5-alpha_reductase2.pkl'
-with open(model_path, 'rb') as file:
-    model = pickle.load(file)
+# Load the trained model from GitHub
+model_url = 'https://github.com/khalidmostafaa/5-alpha-reductase-2/blob/main/5-alpha_reductase2.pkl'
+response = requests.get(model_url)
+if response.status_code == 200:
+    model = pickle.load(BytesIO(response.content))
+else:
+    st.error("Error loading model from GitHub")
 
 # Function to generate PubChem-like fingerprints
 def get_fingerprint(smiles):
