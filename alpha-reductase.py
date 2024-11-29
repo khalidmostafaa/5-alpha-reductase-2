@@ -7,7 +7,7 @@ from rdkit import Chem
 from rdkit.Chem import AllChem
 
 # Load the trained model from GitHub
-model_url = 'https://github.com/khalidmostafaa/5-alpha-reductase-2/blob/main/5-alpha_reductase2.pkl'
+model_url = 'https://github.com/khalidmostafaa/5-alpha-reductase-2/raw/main/5-alpha_reductase2.pkl'
 response = requests.get(model_url)
 if response.status_code == 200:
     model = pickle.load(BytesIO(response.content))
