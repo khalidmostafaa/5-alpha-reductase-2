@@ -43,14 +43,15 @@ st.markdown(
 )
 
 # Streamlit app interface
-st.title("DPP-4 Inhibitor Predictor")
+st.title(" 5-alpha-reductase type 2 Inhibitor Predictor")
 
 # Intro section
 st.markdown(
     """
     <div class="intro-text">
-        DPP-4 inhibitors are a class of oral medications used to manage type 2 diabetes.
-  This model predicts the potency (pIC50) of molecules against the DPP-4 enzyme, aiding in the discovery and development of novel drugs for type 2 diabetes.
+       5-alpha-reductase type 2 converts testosterone into dihydrotestosterone (DHT), a potent androgen linked to male pattern baldness. 
+       DHT causes hair follicle miniaturization, leading to thinner, shorter hair and eventual hair loss in genetically predisposed individuals.
+       Drugs inhibit this enzyme, reducing DHT levels and slowing hair loss.
 
     </div>
     """,
