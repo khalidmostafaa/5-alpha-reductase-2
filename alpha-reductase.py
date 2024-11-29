@@ -54,7 +54,8 @@ st.markdown(
     <div class="intro-text">
        5-alpha-reductase type 2 converts testosterone into dihydrotestosterone (DHT), a potent androgen linked to male pattern baldness. 
        DHT causes hair follicle miniaturization, leading to thinner, shorter hair and eventual hair loss in genetically predisposed individuals.
-       Drugs inhibit this enzyme, reducing DHT levels and slowing hair loss.
+       Drugs inhibit this enzyme, reducing DHT levels and slowing hair loss. 
+       Model Accuracy (89%)
 
     </div>
     """,
