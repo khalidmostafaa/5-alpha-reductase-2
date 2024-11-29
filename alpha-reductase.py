@@ -65,37 +65,30 @@ st.markdown(
 # SMILES input
 smiles_input = st.text_input("Enter the canonical SMILES:", placeholder="Example: CC[C@H](C)[C@H](N)C(=O)N1CCCC1")
 
-
-
-          if st.button("Predict pIC50"):
+if st.button("Predict"):
     if smiles_input:
-        # Preprocess the SMILES string and predict
-        try:
-            # Assuming `featurize_smiles` is your function to generate descriptors from SMILES
-            features = featurize_smiles(smiles)
-            features_df = pd.DataFrame([features])
-            prediction = model.predict(features_df)[0]
-            
-            # Categorize the prediction
-            if prediction > 7:
-                category = "Active"
-                color = "green"
-            elif 5 <= prediction <= 7:
-                category = "Intermediate"
-                color = "orange"
-            else:
-                category = "Inactive"
-                color = "red"
+        fingerprint = get_fingerprint(smiles_input)
 
-            # Display the result with color
-            st.markdown(
-                f"<h3 style='color:{color};'>Predicted pIC50: {prediction:.2f} ({category})</h3>",
-                unsafe_allow_html=True,
-            )
-        except Exception as e:
-            st.error(f"Error: {e}")
+        if fingerprint:
+            # Convert fingerprint to DataFrame and ensure all columns are strings
+            fingerprint_df = pd.DataFrame([fingerprint], columns=[f'PubchemFP{i}' for i in range(2048)])
+            fingerprint_df.columns = fingerprint_df.columns.astype(str)
+
+            # Prediction
+            prediction = model.predict(fingerprint_df)[0]
+            st.write(f"Predicted pIC50: {prediction:.2f}")
+
+            # Display matching PubChem fingerprints
+            matching_fingerprints = {f"PubchemFP{i}": bit for i, bit in enumerate(fingerprint) if bit == 1}
+            if matching_fingerprints:
+                st.write("Matching PubChem Fingerprints (1s):")
+                st.json(matching_fingerprints)
+            else:
+                st.write("No matching PubChem fingerprints (1s) for this molecule.")
+        else:
+            st.error("Invalid SMILES string. Please enter a valid SMILES.")
     else:
-        st.warning("Please enter a valid SMILES string.")
+        st.warning("Please enter a SMILES string.")
 
 # Disclaimer section
 st.markdown(
